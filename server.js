@@ -25,7 +25,9 @@ app.get("/api/hello", function (req, res) {
   res.json({greeting: 'hello API'});
 });
 
-
+app.get("/api/:date", (req, res) => {
+  res.json({unix: req.path});
+});
 
 // listen for requests :)
 var listener = app.listen(port, function () {
