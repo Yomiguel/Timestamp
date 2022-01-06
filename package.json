@@ -1,4 +1,8 @@
 {
+	"author": {
+		"name": "Luis Miguel Jimenez",
+		"mail": "yomiguel112@gmail.com"
+		},
 	"name": "fcc-api-projects-boilerplate",
 	"version": "0.0.1",
 	"description": "An FCC Backend Challenge",
