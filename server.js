@@ -29,8 +29,8 @@ app.get("/api/hello", function (req, res) {
 
 app.get("/api/:date?", (req, res) => {
   if(format(req.params.date)) {
-    unixDate = "hola"; 
-    utcDate = "hola";
+    unixDate = new Date(Number(req.params.date)).getTime(); 
+    utcDate = new Date(Number(req.params.date)).toUTCString();
   } else {
     unixDate = new Date(req.params.date).getTime(); 
     utcDate = new Date(req.params.date).toUTCString();
