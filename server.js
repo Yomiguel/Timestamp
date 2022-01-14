@@ -5,8 +5,7 @@
 var express = require('express');
 var app = express();
 const port = process.env.PORT || 5500;
-let unixDate; 
-let utcDate;
+
 
 // enable CORS (https://en.wikipedia.org/wiki/Cross-origin_resource_sharing)
 // so that your API is remotely testable by FCC 
@@ -28,17 +27,7 @@ app.get("/api/hello", function (req, res) {
 });
 
 app.get("/api/:date?", (req, res) => {
-  if(format(req.params.date)) {
-    unixDate = new Date(Number(req.params.date)).getTime(); 
-    utcDate = new Date(Number(req.params.date)).toUTCString();
-  } else {
-    unixDate = new Date(req.params.date).getTime(); 
-    utcDate = new Date(req.params.date).toUTCString();
-  }
-  res.json({
-    unix: unixDate,
-    utc: utcDate
-  });
+  res.send(exit(req.params.date));
 });
 
 //function to determine if the format is unix
@@ -47,6 +36,33 @@ const format = dateImput => {
     return false;
   }
   return true;
+}
+
+const exit = value => {
+  if(value === undefined) {
+    return {
+      unix: new Date().getTime(), 
+      utc: new Date().toUTCString()
+    }
+  } else if(format(value)) {
+      if(String(new Date(Number(value))) === "Invalid Date") {
+        return {error: "Invalid Date"}
+      } else {
+          return {
+            unix: new Date(Number(value)).getTime(),
+            utc: new Date(Number(value)).toUTCString()
+          }
+        }  
+  } else if(String(new Date(value)) === "Invalid Date") {
+      return {
+        error: "Invalid Date"
+      }
+    } else {
+        return {
+          unix: new Date(value).getTime(),
+          utc: new Date(value).toUTCString()
+        }
+      }
 }
 
 // listen for requests :)
